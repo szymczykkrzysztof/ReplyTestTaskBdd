@@ -8,13 +8,11 @@ namespace ReplyTestTaskBdd.PageObjects;
 /// </summary>
 public class DashboardPage : BasePageObject
 {
-    protected internal DashboardPage(IWebDriver webDriver) : base(webDriver)
+    public DashboardPage(IWebDriver webDriver) : base(webDriver)
     {
     }
 
     private By NavBarSelector => By.ClassName("nav-wrap");
-
-    //private IWebElement NavBar => _webDriver.FindElement(NavBarSelector);
 
     public void NavigateTo(string menu, string item)
     {

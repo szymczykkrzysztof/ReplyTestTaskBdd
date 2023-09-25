@@ -46,6 +46,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "DotNetSeleniumExtras.WaitHelpers": {
+              "target": "Package",
+              "version": "[3.11.0, )"
+            },
             "FluentAssertions": {
               "target": "Package",
               "version": "[6.2.0, )"
@@ -57,6 +61,18 @@
             "NUnit3TestAdapter": {
               "target": "Package",
               "version": "[4.1.0, )"
+            },
+            "Selenium.Support": {
+              "target": "Package",
+              "version": "[4.12.4, )"
+            },
+            "Selenium.WebDriver.ChromeDriver": {
+              "target": "Package",
+              "version": "[117.0.5938.9200, )"
+            },
+            "Selenium.WebDriver.GeckoDriver": {
+              "target": "Package",
+              "version": "[0.33.0, )"
             },
             "SpecFlow.NUnit": {
               "target": "Package",
