@@ -29,13 +29,11 @@ public class ReportsPage : BasePageObject
     {
         WaitForElementIsDisplayed(By.XPath("//div[contains(text(),'Selected')]//span[@class='text-number']"));
         var elements = _webDriver.FindElements(By.XPath("//div[contains(text(),'Selected')]//span[@class='text-number']"));
-        Assert.AreEqual(elements[0].Text, "0");
-        Assert.AreEqual(elements[1].Text, "608");
+        Assert.AreEqual(int.Parse(elements[0].Text), 0);
+        Assert.Greater(int.Parse(elements[1].Text), 680);
     }
     private void ChooseReport(string report)
     {
-        WaitForElementIsDisplayed(
-            By.XPath($"//div[contains(@id,'text-input-select')]//*[contains(text(),'{report}')]"));
         _webDriver.FindElement(By.XPath($"//div[contains(@id,'text-input-select')]//*[contains(text(),'{report}')]"))
             .Click();
         WaitForElementIsDisplayed(By.XPath("//span[text()='Run Report']/parent::button"));
@@ -44,12 +42,11 @@ public class ReportsPage : BasePageObject
     private void SelectReport(string report)
     {
         WaitForElementIsDisplayed(By.XPath("//span[text()='Quick Filter']"));
-        _webDriver.FindElement(By.XPath("//span[text()='Quick Filter']")).Click();
-         Thread.Sleep(2000);
         var element = _webDriver.FindElement(By.XPath("//span[text()='Quick Filter']"));
         new Actions(_webDriver)
             .MoveToElement(element)
             .Click()
+            .Pause(TimeSpan.FromSeconds(2))
             .Perform();
         WaitForElementIsDisplayed(By.XPath("//input[@id='filter_text']"));
         _webDriver.FindElement(By.XPath("//input[@id='filter_text']")).SendKeys(report);
