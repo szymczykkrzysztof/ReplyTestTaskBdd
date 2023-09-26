@@ -1,4 +1,5 @@
-﻿using ReplyTestTaskBdd.Drivers;
+﻿using NUnit.Framework;
+using ReplyTestTaskBdd.Drivers;
 using ReplyTestTaskBdd.PageObjects;
 
 namespace ReplyTestTaskBdd.Steps;
@@ -10,6 +11,8 @@ public class CrmCloudStepDefinitions
     private readonly DashboardPage _dashboard;
     private readonly ContactsPage _contactsPage;
     private readonly ReportsPage _reportsPage;
+    private readonly ActivityLogPage _activityLogPage;
+    private int _numberOfItemsInLog = 0;
 
     public CrmCloudStepDefinitions(BrowserDriver browserDriver)
     {
@@ -17,6 +20,7 @@ public class CrmCloudStepDefinitions
         _loginPage = new LoginPage(browserDriver.Current);
         _dashboard = new DashboardPage(browserDriver.Current);
         _reportsPage = new ReportsPage(browserDriver.Current);
+        _activityLogPage = new ActivityLogPage(browserDriver.Current);
     }
 
     [Given(@"Admin Login to Crm with login ""(.*)"" and password ""(.*)""")]
@@ -74,5 +78,26 @@ public class CrmCloudStepDefinitions
     public void ThenVerifyResultsWereReturned()
     {
         _reportsPage.CheckResults();
+    }
+
+    [When(@"Select (.*) first items in the table")]
+    public void WhenSelectFirstItemsInTheTable(int numberOfItems)
+    {
+        _numberOfItemsInLog = _activityLogPage.GetNumberOfAllItems();
+        _activityLogPage.SelectLogItems(numberOfItems);
+    }
+
+    [When(@"Click Actions and Delete")]
+    public void WhenClickActionsAndDelete()
+    {
+        _activityLogPage.ExecuteDelete();
+    }
+    
+    [Then(@"Verify (.*) items were deleted")]
+    public void ThenVerifyItemsWereDeleted(int deletedItems)
+    {
+        Thread.Sleep(2000);
+        var currentNumberOfItemsInLog = _activityLogPage.GetNumberOfAllItems();
+        Assert.AreEqual(_numberOfItemsInLog-deletedItems,currentNumberOfItemsInLog);
     }
 }

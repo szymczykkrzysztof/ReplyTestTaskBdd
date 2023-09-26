@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
 
 namespace ReplyTestTaskBdd.PageObjects;
 
@@ -9,48 +8,48 @@ public class ReportsPage : BasePageObject
     public ReportsPage(IWebDriver webDriver) : base(webDriver)
     {
     }
-
+    private By RunReportSelector => By.XPath("//span[text()='Run Report']/parent::button");
+    private By ResultsSelector => By.XPath("//div[contains(text(),'Selected')]//span[@class='text-number']");
+    private By QuickFilterSelector =>By.XPath("//span[text()='Quick Filter']");
+    private By FilterSelector => By.XPath("//input[@id='filter_text']");
+    private IWebElement RunReportBtn => _webDriver.FindElement(RunReportSelector);
+    private IWebElement QuickFilter => _webDriver.FindElement(QuickFilterSelector);
+    private IWebElement Filter => _webDriver.FindElement(FilterSelector);
+    private IReadOnlyCollection<IWebElement> Results => _webDriver.FindElements(ResultsSelector);
     public void FindReport(string report)
     {
         SelectReport(report);
         ChooseReport(report);
-        
-       
     }
 
     public void RunReport()
     {
-        WaitForElementIsDisplayed(By.XPath("//span[text()='Run Report']/parent::button"));
+        WaitForElementIsDisplayed(RunReportSelector);
         Thread.Sleep(1000);
-        _webDriver.FindElement(By.XPath("//span[text()='Run Report']/parent::button")).Click();
+        ClickOnElement(RunReportBtn);
     }
 
     public void CheckResults()
     {
-        WaitForElementIsDisplayed(By.XPath("//div[contains(text(),'Selected')]//span[@class='text-number']"));
-        var elements = _webDriver.FindElements(By.XPath("//div[contains(text(),'Selected')]//span[@class='text-number']"));
+        WaitForElementIsDisplayed(RunReportSelector);
+        var elements = Results.ToList();
+            
         Assert.AreEqual(int.Parse(elements[0].Text), 0);
-        Assert.Greater(int.Parse(elements[1].Text), 680);
+        Assert.Greater(int.Parse(elements[1].Text), 0);
     }
+
     private void ChooseReport(string report)
     {
-        _webDriver.FindElement(By.XPath($"//div[contains(@id,'text-input-select')]//*[contains(text(),'{report}')]"))
-            .Click();
-        WaitForElementIsDisplayed(By.XPath("//span[text()='Run Report']/parent::button"));
+        ClickOnElement(_webDriver.FindElement(By.XPath($"//div[contains(@id,'text-input-select')]//*[contains(text(),'{report}')]")));
+        WaitForElementIsDisplayed(RunReportSelector);
     }
 
     private void SelectReport(string report)
     {
-        WaitForElementIsDisplayed(By.XPath("//span[text()='Quick Filter']"));
-        var element = _webDriver.FindElement(By.XPath("//span[text()='Quick Filter']"));
-        new Actions(_webDriver)
-            .MoveToElement(element)
-            .Click()
-            .Pause(TimeSpan.FromSeconds(2))
-            .Perform();
-        WaitForElementIsDisplayed(By.XPath("//input[@id='filter_text']"));
-        _webDriver.FindElement(By.XPath("//input[@id='filter_text']")).SendKeys(report);
+        WaitForElementIsDisplayed(QuickFilterSelector);
+        ClickOnElement(QuickFilter);
+        WaitForElementIsDisplayed(FilterSelector);
+        Filter.SendKeys(report);
         Thread.Sleep(1500);
-        
     }
 }

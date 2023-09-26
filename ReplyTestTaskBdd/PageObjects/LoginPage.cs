@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 
 namespace ReplyTestTaskBdd.PageObjects;
 
