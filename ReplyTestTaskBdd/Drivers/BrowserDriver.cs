@@ -1,5 +1,6 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 
 namespace ReplyTestTaskBdd.Drivers
 {
@@ -25,16 +26,28 @@ namespace ReplyTestTaskBdd.Drivers
         /// Creates the Selenium web driver (opens a browser)
         /// </summary>
         /// <returns></returns>
-        private IWebDriver CreateWebDriver()
+        private IWebDriver? CreateWebDriver()
         {
-            //We use the Chrome browser
-            var chromeDriverService = ChromeDriverService.CreateDefaultService();
+            IWebDriver? driver = null;
+            if (Hooks.Hooks.Configuration["browser"] == "Chrome")
+            {
+                var chromeDriverService = ChromeDriverService.CreateDefaultService();
 
-            var chromeOptions = new ChromeOptions();
+                var chromeOptions = new ChromeOptions();
 
-            var chromeDriver = new ChromeDriver(chromeDriverService, chromeOptions);
+                var chromeDriver = new ChromeDriver(chromeDriverService, chromeOptions);
 
-            return chromeDriver;
+                driver =  chromeDriver;
+            }
+            else if (Hooks.Hooks.Configuration["browser"] == "Firefox")
+            {
+                var fireFoxDriverService = FirefoxDriverService.CreateDefaultService();
+                var fireFoxOptions = new FirefoxOptions();
+                var geckoDriver = new FirefoxDriver(fireFoxDriverService, fireFoxOptions);
+                driver = geckoDriver;
+            }
+            
+            return driver;
         }
 
         /// <summary>
