@@ -30,7 +30,7 @@ public class ActivityLogPage : BasePageObject
     {
         ClickOnElement(_webDriver.FindElement(By.XPath("//button[contains(@id,'ActionButtonHead')]")));
         ClickOnElement(
-            _webDriver.FindElement(By.XPath("//div[contains(text(),'Delete') and contains(@class,'input-label')]")));
+            _webDriver.FindElement(By.XPath("//div[contains(text(),'Delete') and contains(@class,'input-label')]")), 10);
         var alert = _webDriver.SwitchTo().Alert();
         alert.Accept();
     }

@@ -23,12 +23,12 @@ public abstract class BasePageObject
         return _webDriver.FindElement(locator).Displayed ;
     }
 
-    protected void ClickOnElement(IWebElement element)
+    protected void ClickOnElement(IWebElement element, int delay=2)
     {
         new Actions(_webDriver)
             .MoveToElement(element)
             .Click()
-            .Pause(TimeSpan.FromSeconds(2))
+            .Pause(TimeSpan.FromSeconds(delay))
             .Perform();
     }
 }

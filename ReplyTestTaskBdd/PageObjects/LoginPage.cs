@@ -17,7 +17,7 @@ public class LoginPage : BasePageObject
 
     public void Login(string username, string password)
     {
-        _webDriver.Navigate().GoToUrl("https://demo.1crmcloud.com");
+        _webDriver.Navigate().GoToUrl(Hooks.Hooks.Configuration?["url"]);
         UserName.SendKeys(username);
         Password.SendKeys(password);
         LoginBtn.Click();
