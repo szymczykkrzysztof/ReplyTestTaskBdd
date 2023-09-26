@@ -35,20 +35,18 @@ namespace ReplyTestTaskBdd.Drivers
                 {
                     var chromeDriverService = ChromeDriverService.CreateDefaultService();
                     var chromeOptions = new ChromeOptions();
-                    var chromeDriver = new ChromeDriver(chromeDriverService, chromeOptions);
-                    driver =  chromeDriver;
+                    driver = new ChromeDriver(chromeDriverService, chromeOptions);
                     break;
                 }
                 case "Firefox":
                 {
                     var fireFoxDriverService = FirefoxDriverService.CreateDefaultService();
                     var fireFoxOptions = new FirefoxOptions();
-                    var geckoDriver = new FirefoxDriver(fireFoxDriverService, fireFoxOptions);
-                    driver = geckoDriver;
+                    driver = new FirefoxDriver(fireFoxDriverService, fireFoxOptions);
                     break;
                 }
             }
-            
+
             return driver;
         }
 
