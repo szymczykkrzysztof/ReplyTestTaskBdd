@@ -26,25 +26,27 @@ namespace ReplyTestTaskBdd.Drivers
         /// Creates the Selenium web driver (opens a browser)
         /// </summary>
         /// <returns></returns>
-        private IWebDriver? CreateWebDriver()
+        private IWebDriver CreateWebDriver()
         {
             IWebDriver? driver = null;
-            if (Hooks.Hooks.Configuration["browser"] == "Chrome")
+            switch (Hooks.Hooks.Configuration?["browser"])
             {
-                var chromeDriverService = ChromeDriverService.CreateDefaultService();
-
-                var chromeOptions = new ChromeOptions();
-
-                var chromeDriver = new ChromeDriver(chromeDriverService, chromeOptions);
-
-                driver =  chromeDriver;
-            }
-            else if (Hooks.Hooks.Configuration["browser"] == "Firefox")
-            {
-                var fireFoxDriverService = FirefoxDriverService.CreateDefaultService();
-                var fireFoxOptions = new FirefoxOptions();
-                var geckoDriver = new FirefoxDriver(fireFoxDriverService, fireFoxOptions);
-                driver = geckoDriver;
+                case "Chrome":
+                {
+                    var chromeDriverService = ChromeDriverService.CreateDefaultService();
+                    var chromeOptions = new ChromeOptions();
+                    var chromeDriver = new ChromeDriver(chromeDriverService, chromeOptions);
+                    driver =  chromeDriver;
+                    break;
+                }
+                case "Firefox":
+                {
+                    var fireFoxDriverService = FirefoxDriverService.CreateDefaultService();
+                    var fireFoxOptions = new FirefoxOptions();
+                    var geckoDriver = new FirefoxDriver(fireFoxDriverService, fireFoxOptions);
+                    driver = geckoDriver;
+                    break;
+                }
             }
             
             return driver;
