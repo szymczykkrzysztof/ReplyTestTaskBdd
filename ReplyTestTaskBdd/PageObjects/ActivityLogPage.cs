@@ -8,11 +8,19 @@ public class ActivityLogPage : BasePageObject
     {
     }
 
+    private By CounterOfOperationsSelector =>
+        By.XPath("//span[contains(@id,'SelectCountHead')]//parent::div//span[last()]");
+
+    private IWebElement Actions => _webDriver.FindElement(By.XPath("//button[contains(@id,'ActionButtonHead')]"));
+
+    private IWebElement Delete => _webDriver.FindElement(By.XPath("//div[contains(text(),'Delete') and contains(@class,'input-label')]"));
+
+    private IWebElement CounterOfOperations => _webDriver.FindElement(CounterOfOperationsSelector);
+
     public int GetNumberOfAllItems()
     {
-        WaitForElementIsDisplayed(By.XPath("//span[contains(@id,'SelectCountHead')]//parent::div//span[last()]"));
-        var textNumber = _webDriver
-            .FindElement(By.XPath("//span[contains(@id,'SelectCountHead')]//parent::div//span[last()]")).Text;
+        WaitForElementIsDisplayed(CounterOfOperationsSelector);
+        var textNumber = CounterOfOperations.Text;
         var number = int.Parse(textNumber.Replace(",", ""));
         return number;
     }
@@ -28,9 +36,8 @@ public class ActivityLogPage : BasePageObject
 
     public void ExecuteDelete()
     {
-        ClickOnElement(_webDriver.FindElement(By.XPath("//button[contains(@id,'ActionButtonHead')]")));
-        ClickOnElement(
-            _webDriver.FindElement(By.XPath("//div[contains(text(),'Delete') and contains(@class,'input-label')]")), 10);
+        ClickOnElement(Actions);
+        ClickOnElement(Delete, 10);
         var alert = _webDriver.SwitchTo().Alert();
         alert.Accept();
     }

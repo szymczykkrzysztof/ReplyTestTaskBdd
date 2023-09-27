@@ -7,15 +7,12 @@ namespace ReplyTestTaskBdd.Hooks;
 [Binding]
 public class CrmCloudHooks
 {
-    /// <summary>
-    /// Login to application with admin credentials
-    /// </summary>
-    /// <param name="browserDriver"></param>
-    [BeforeScenario]
-    public static void BeforeScenario(BrowserDriver browserDriver)
-    {
-        var loginPage = new LoginPage(browserDriver.Current);
-        loginPage.Login("admin", "admin");
-
-    }
+    //TODO: ask how to login via api - as following code is not that approach
+    // [BeforeScenario]
+    // public static void BeforeScenario(BrowserDriver browserDriver)
+    // {
+    //     var loginPage = new LoginPage(browserDriver.Current);
+    //     loginPage.Login("admin", "admin");
+    //
+    // }
 }

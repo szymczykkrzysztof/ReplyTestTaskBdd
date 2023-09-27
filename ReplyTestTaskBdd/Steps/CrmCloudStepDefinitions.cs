@@ -40,7 +40,6 @@ public class CrmCloudStepDefinitions
     {
     }
 
-
     [When(@"User navigates to ""(.*)"" and ""(.*)""")]
     public void WhenUserNavigatesToAnd(string tabMenu, string item)
     {
@@ -92,12 +91,12 @@ public class CrmCloudStepDefinitions
     {
         _activityLogPage.ExecuteDelete();
     }
-    
+
     [Then(@"Verify (.*) items were deleted")]
     public void ThenVerifyItemsWereDeleted(int deletedItems)
     {
         Thread.Sleep(2000);
         var currentNumberOfItemsInLog = _activityLogPage.GetNumberOfAllItems();
-        Assert.AreEqual(_numberOfItemsInLog-deletedItems,currentNumberOfItemsInLog);
+        Assert.AreEqual(_numberOfItemsInLog - deletedItems, currentNumberOfItemsInLog);
     }
 }

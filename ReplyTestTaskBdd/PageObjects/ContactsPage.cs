@@ -16,8 +16,6 @@ public class ContactsPage : BasePageObject
     private By CategorySelector => By.Id("DetailFormcategories-input");
     private By SaveSelector => By.Id("DetailForm_save2");
     private By HeaderSelector => By.XPath("//div[@id='_form_header']/h3");
-
-
     private IWebElement FirstName => _webDriver.FindElement(FirstNameSelector);
     private IWebElement LastName => _webDriver.FindElement(LastNameSelector);
     private IWebElement BusinessRole => _webDriver.FindElement(BusinessRoleSelector);
@@ -25,10 +23,7 @@ public class ContactsPage : BasePageObject
     private IWebElement SaveBtn => _webDriver.FindElement(SaveSelector);
     private IWebElement Header => _webDriver.FindElement(HeaderSelector);
     private IWebElement Categories => _webDriver.FindElement(By.XPath("//p[text()='Category']/parent::li"));
-
-    private IWebElement BusinessRoleIndicator =>
-        _webDriver.FindElement(By.XPath("//p[text()='Business Role']/../div[@class='form-value']"));
-
+    private IWebElement BusinessRoleIndicator => _webDriver.FindElement(By.XPath("//p[text()='Business Role']/../div[@class='form-value']"));
     private IWebElement CategoriesDropDown =>
         _webDriver.FindElement(By.XPath("//div[@id='DetailFormcategories-input-search-text']/input"));
 
